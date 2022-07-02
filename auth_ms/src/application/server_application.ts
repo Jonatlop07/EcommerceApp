@@ -10,10 +10,10 @@ import { APIServerConfiguration } from '@infrastructure/config/api_server.config
 import * as chalk from 'chalk';
 
 function buildAPIDocumentation(app: INestApplication): void {
-  const title = 'Mini Ecommerce';
-  const description = 'Mini Ecommerce API Documentation';
+  const title = 'Mini Ecommerce Auth Microservice';
+  const description = 'Mini Ecommerce Auth Microservice API Documentation';
   const version = '1.0.0';
-  const tag = 'ecommerce';
+  const tag = 'auth';
 
   const config: Omit<OpenAPIObject, 'paths'> = new DocumentBuilder()
     .setTitle(title)
@@ -30,6 +30,7 @@ export class ServerApplication {
   private readonly host: string = APIServerConfiguration.HOST;
   private readonly port: number = APIServerConfiguration.PORT;
   private readonly enable_log: boolean = APIServerConfiguration.ENABLE_LOG;
+  private readonly api_prefix: string = APIServerConfiguration.API_PREFIX;
 
   public async run(): Promise<void> {
     try {
@@ -38,6 +39,10 @@ export class ServerApplication {
         options['logger'] = false;
       }
       const app = await NestFactory.create(RootModule, options);
+      app.setGlobalPrefix(this.api_prefix);
+      app.enableCors({
+        origin: '*'
+      });
       buildAPIDocumentation(app);
       await app.listen(
         process.env.PORT || this.port,
