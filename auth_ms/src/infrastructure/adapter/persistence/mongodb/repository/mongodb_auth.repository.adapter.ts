@@ -1,7 +1,7 @@
 import AuthRepository from '@core/domain/auth/use-case/repository/auth.repository';
 import { AccountDTO } from '@core/domain/auth/dto/account.dto';
 import AccountQueryModel from '@core/domain/auth/use-case/query-model/account.query_model';
-import MongodbAuthRepository from '@infrastructure/adapter/persistence/mongodb/repository/mongodb_auth_repository';
+import MongodbAuthRepository from '@infrastructure/adapter/persistence/mongodb/repository/mongodb_auth.repository';
 import { Logger } from '@nestjs/common';
 
 export default class MongoDBAuthRepositoryAdapter implements AuthRepository {

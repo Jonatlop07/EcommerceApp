@@ -4,8 +4,8 @@ import AuthDITokens from '@core/domain/auth/di/auth_di_tokens';
 import SignUpService from '@core/service/auth/sign_up.service';
 import MongoDBDITokens from '@infrastructure/adapter/persistence/mongodb/di/mongodb_di_tokens';
 import MongoDBAuthRepositoryAdapter
-  from '@infrastructure/adapter/persistence/mongodb/repository/mongodb_auth_repository.adapter';
-import MongodbAuthRepository from '@infrastructure/adapter/persistence/mongodb/repository/mongodb_auth_repository';
+  from '@infrastructure/adapter/persistence/mongodb/repository/mongodb_auth.repository.adapter';
+import MongodbAuthRepository from '@infrastructure/adapter/persistence/mongodb/repository/mongodb_auth.repository';
 
 const persistence_providers: Array<Provider> = [
   {
