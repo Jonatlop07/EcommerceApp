@@ -1,5 +1,5 @@
 import { Module, Provider } from '@nestjs/common';
-import AuthController from '@application/api/http/controller/auth.controller';
+import AuthController from '@application/api/http-rest/controller/auth.controller';
 import AuthDITokens from '@core/domain/auth/di/auth_di_tokens';
 import SignUpService from '@core/service/auth/sign_up.service';
 import MongoDBDITokens from '@infrastructure/adapter/persistence/mongodb/di/mongodb_di_tokens';

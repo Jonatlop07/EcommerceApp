@@ -2,8 +2,9 @@ import { Body, Controller, HttpCode, HttpStatus, Inject, Logger, Post } from '@n
 import { ApiCreatedResponse, ApiInternalServerErrorResponse, ApiTags } from '@nestjs/swagger';
 import AuthDITokens from '@core/domain/auth/di/auth_di_tokens';
 import SignUpInteractor from '@core/domain/auth/use-case/interactor/sign_up.interactor';
-import { ValidationPipe } from '@application/api/http/common/pipes/validation.pipe';
-import HttpSignUpDTO from '@application/api/http/dto/http_sign_up.dto';
+import { ValidationPipe } from '@application/api/http-rest/common/pipes/validation.pipe';
+import HttpSignUpDTO from '@application/api/http-rest/dto/http_sign_up.dto';
+import SignUpInputMapper from '@application/api/http-rest/mapper/sign_up_input.mapper';
 
 @Controller('auth')
 @ApiTags('authentication')
@@ -24,6 +25,6 @@ export default class AuthController {
     description: 'Account successfully created'
   })
   async signUp(@Body(new ValidationPipe()) credentials: HttpSignUpDTO): Promise<void> {
-    return Promise.resolve();
+    await this.sign_up_interactor.execute(SignUpInputMapper.toInputModel(credentials));
   }
 }
