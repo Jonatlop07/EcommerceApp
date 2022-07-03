@@ -6,6 +6,7 @@ import { Test } from '@nestjs/testing';
 import { Connection } from 'mongoose';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { APIServerConfiguration } from '@infrastructure/config/api_server.config';
+import AuthModule from '@application/module/auth.module';
 
 describe('SignUp', () => {
   let app: INestApplication;

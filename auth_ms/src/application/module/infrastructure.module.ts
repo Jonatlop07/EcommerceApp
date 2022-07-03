@@ -1,10 +1,18 @@
 import { Global, Module } from '@nestjs/common';
 import { MongooseModule, MongooseModuleOptions } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import Account from '@infrastructure/adapter/persistence/mongodb/entity/account.model';
+import AccountSchema from '@infrastructure/adapter/persistence/mongodb/entity/account.schema';
 
 @Global()
 @Module({
   imports: [
+    MongooseModule.forFeature([
+      {
+        name: Account.name,
+        schema: AccountSchema
+      }
+    ]),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (config_service: ConfigService): Promise<MongooseModuleOptions> => ({
@@ -16,4 +24,4 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     MongooseModule
   ]
 })
-export class InfrastructureModule {}
+export default class InfrastructureModule {}
