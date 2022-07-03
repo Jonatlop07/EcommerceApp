@@ -8,7 +8,7 @@ export abstract class EntityRepository<T extends Document> {
     entity_filter_query: FilterQuery<T>,
     projection?: Record<string, unknown>
   ): Promise<Nullable<T>> {
-    return this.entity_model
+    return await this.entity_model
       .findOne(
         entity_filter_query,
         {
@@ -21,6 +21,6 @@ export abstract class EntityRepository<T extends Document> {
 
   public async create(create_entity_data: unknown): Promise<T> {
     const entity = new this.entity_model(create_entity_data);
-    return entity.save();
+    return await entity.save();
   }
 }

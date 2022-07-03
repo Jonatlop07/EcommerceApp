@@ -5,8 +5,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import Account from '@infrastructure/adapter/persistence/mongodb/entity/account.model';
 import { Model } from 'mongoose';
 
-export default class MongodbAuthRepository extends EntityRepository<AccountDocument> {
-  private readonly logger: Logger = new Logger(MongodbAuthRepository.name);
+export default class MongoDBAuthRepository extends EntityRepository<AccountDocument> {
+  private readonly logger: Logger = new Logger(MongoDBAuthRepository.name);
 
   constructor(
     @InjectModel(Account.name)
