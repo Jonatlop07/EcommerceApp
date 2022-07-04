@@ -24,7 +24,7 @@ Figure 1. Authentication Components
 
 ## Logical Layers:
 
-![Auth Microservice Layer View](./documentation/images/layers.png)
+![Auth Microservice Layer View](./documentation/images/layers.png)  
 Figure 2. Authentication Microservice Logical Layers
 
 ## Data Model:
