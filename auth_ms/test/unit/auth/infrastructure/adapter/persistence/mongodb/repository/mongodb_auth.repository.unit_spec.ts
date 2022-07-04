@@ -53,4 +53,24 @@ describe('MongoDBAuthRepository', () => {
       });
     });
   });
+
+  describe('create', () => {
+    describe('when create is called', () => {
+      let account: Account;
+      let create_spy: jest.SpyInstance;
+
+      beforeEach(async () => {
+        create_spy = jest.spyOn(MongoDBAccountModelMock.prototype, 'create');
+        account = await mongodb_auth_repository.create(createdAccountDTOStub());
+      });
+
+      it('should call account_model', () => {
+        expect(create_spy).toHaveBeenCalledWith(createdAccountDTOStub());
+      });
+
+      it('should return a user', () => {
+        expect(account).toEqual(createdAccountModelStub());
+      });
+    });
+  });
 });

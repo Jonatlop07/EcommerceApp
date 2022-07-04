@@ -1,5 +1,6 @@
 import { Document, FilterQuery, Model } from 'mongoose';
 import { Nullable } from '@core/common/type/common_types';
+import { AccountDTO } from '@core/domain/auth/dto/account.dto';
 
 export abstract class EntityRepository<T extends Document> {
   protected constructor(protected readonly entity_model: Model<T>) {}
@@ -19,8 +20,8 @@ export abstract class EntityRepository<T extends Document> {
       .exec();
   }
 
-  public async create(create_entity_data: unknown): Promise<T> {
-    const entity = new this.entity_model(create_entity_data);
+  public async create(create_entity_data: AccountDTO): Promise<T> {
+    const entity = await this.entity_model.create(create_entity_data);
     return await entity.save();
   }
 }

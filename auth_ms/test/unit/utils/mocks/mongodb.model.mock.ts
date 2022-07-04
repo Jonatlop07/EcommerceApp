@@ -1,13 +1,14 @@
-import { FilterQuery } from 'mongoose';
+import { FilterQuery, HydratedDocument } from 'mongoose';
+import { AccountDTO } from '@core/domain/auth/dto/account.dto';
 
 export default abstract class MongoDBModelMock<T> {
   protected abstract entity_stub: T;
 
-  constructor(create_entity_data: T) {
-    this.constructorSpy(create_entity_data);
+  public async create(create_entity_data: T): Promise<{  }> {
+    return  {
+      save: (): Promise<T> => Promise.resolve(this.entity_stub)
+    }
   }
-
-  public constructorSpy(create_entity_data: T): void {}
 
   public findOne(
     entity_filter_query: FilterQuery<T>,
@@ -16,9 +17,5 @@ export default abstract class MongoDBModelMock<T> {
     return {
       exec: (): Promise<T> => Promise.resolve(this.entity_stub)
     };
-  }
-
-  public async create(): Promise<T> {
-    return Promise.resolve(this.entity_stub);
   }
 }
