@@ -19,7 +19,7 @@ export default class AuthController {
     private readonly sign_up_interactor: SignUpInteractor
   ) {}
 
-  @Post()
+  @Post('account')
   @HttpCode(HttpStatus.CREATED)
   @ApiCreatedResponse({
     description: 'Account successfully created'

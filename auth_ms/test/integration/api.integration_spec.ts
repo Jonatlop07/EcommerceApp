@@ -1,40 +1,33 @@
-import { HttpStatus, INestApplication } from '@nestjs/common';
-import supertest from 'supertest';
-import { getConnectionToken, MongooseModule, MongooseModuleOptions } from '@nestjs/mongoose';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { HttpStatus } from '@nestjs/common';
+import * as request from 'supertest';
+import { getConnectionToken } from '@nestjs/mongoose';
 import { Test } from '@nestjs/testing';
 import { Connection } from 'mongoose';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { APIServerConfiguration } from '@infrastructure/config/api_server.config';
-import AuthModule from '@application/module/auth.module';
+import { RootModule } from '@application/module/.root.module';
 
 describe('SignUp', () => {
-  let app: INestApplication;
+  let app: NestExpressApplication;
 
   const api_prefix: string = APIServerConfiguration.API_PREFIX;
+  const port = process.env.PORT || APIServerConfiguration.PORT;
+  const host = process.env.HOST || APIServerConfiguration.HOST;
 
   const api_client = () => {
-    return supertest(app.getHttpServer());
+    return request(app.getHttpServer());
   };
 
   beforeEach(async () => {
     const module_ref = await Test.createTestingModule({
-      imports: [
-        MongooseModule.forRootAsync({
-          imports: [ConfigModule],
-          useFactory: async (config_service: ConfigService): Promise<MongooseModuleOptions> => ({
-            uri: config_service.get<string>('DB_URI'),
-          })
-        }),
-        AuthModule
-      ]
+      imports: [RootModule]
     }).compile();
 
     app = module_ref.createNestApplication<NestExpressApplication>();
     app.setGlobalPrefix(api_prefix);
     await app.listen(
-      process.env.PORT || APIServerConfiguration.PORT,
-      process.env.HOST || APIServerConfiguration.HOST,
+      port,
+      host,
     );
   });
 
@@ -49,7 +42,7 @@ describe('SignUp', () => {
 
   it('signs up', async () => {
     await api_client()
-      .post(`${api_prefix}/account`)
+      .post(`/${api_prefix}/auth/account`)
       .send({
         username: valid_username,
         password: valid_password

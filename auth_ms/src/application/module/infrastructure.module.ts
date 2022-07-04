@@ -15,7 +15,8 @@ import AccountSchema from '@infrastructure/adapter/persistence/mongodb/entity/ac
     ]),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: async (config_service: ConfigService): Promise<MongooseModuleOptions> => ({
+      inject: [ConfigService],
+      useFactory: (config_service: ConfigService): MongooseModuleOptions => ({
         uri: config_service.get<string>('DB_URI')
       })
     })
