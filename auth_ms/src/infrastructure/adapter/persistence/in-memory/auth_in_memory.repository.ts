@@ -1,7 +1,7 @@
 import AuthRepository from '@core/domain/auth/use-case/repository/auth.repository';
 import { AccountDTO } from '@core/domain/auth/dto/account.dto';
 import AccountQueryModel from '@core/domain/auth/use-case/query-model/account.query_model';
-import { getCurrentDateString } from '@core/common/util/time/moment_utils'
+import { getCurrentDateString } from '@core/common/util/time/date_utils'
 
 export class AuthInMemoryRepository implements AuthRepository {
   private currently_available_account_id: string;

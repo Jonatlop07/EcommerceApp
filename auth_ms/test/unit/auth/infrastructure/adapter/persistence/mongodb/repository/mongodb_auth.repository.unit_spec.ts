@@ -6,6 +6,10 @@ import MongoDBAccountModelMock from '@test/unit/utils/mocks/mongodb_account.mode
 import { FilterQuery } from 'mongoose';
 import createdAccountDTOStub from '@test/unit/utils/stubs/created_account.dto.stub';
 import createdAccountModelStub from '@test/unit/utils/stubs/created_account.model.stub';
+import CreateAccountDataMapper
+  from '@infrastructure/adapter/persistence/mongodb/entity/mapper/create_account_data.mapper';
+import CreateAccountDocumentDTO
+  from '@infrastructure/adapter/persistence/mongodb/entity/dto/create_account_document.dto';
 
 describe('MongoDBAuthRepository', () => {
   let mongodb_auth_repository: MongoDBAuthRepository;
@@ -58,14 +62,18 @@ describe('MongoDBAuthRepository', () => {
     describe('when create is called', () => {
       let account: Account;
       let create_spy: jest.SpyInstance;
+      let create_account_document_dto: CreateAccountDocumentDTO = CreateAccountDataMapper
+        .toDocumentDTO(
+          createdAccountDTOStub()
+        );
 
       beforeEach(async () => {
         create_spy = jest.spyOn(MongoDBAccountModelMock.prototype, 'create');
-        account = await mongodb_auth_repository.create(createdAccountDTOStub());
+        account = await mongodb_auth_repository.create(create_account_document_dto);
       });
 
       it('should call account_model', () => {
-        expect(create_spy).toHaveBeenCalledWith(createdAccountDTOStub());
+        expect(create_spy).toHaveBeenCalledWith(create_account_document_dto);
       });
 
       it('should return a user', () => {

@@ -1,12 +1,11 @@
 import { AccountDTO } from '@core/domain/auth/dto/account.dto';
-import { getCurrentDateString } from '@core/common/util/time/moment_utils';
 
 const createdAccountDTOStub = (): AccountDTO => ({
-  account_id: 'b0e4692f-47fa-4591-a295-a93f83587e39',
+  account_id: undefined,
   username: 'new_account',
   password: 'Abc123_tr',
   access_token: null,
-  created_at: getCurrentDateString()
+  created_at: '2022/03/22 11:54:02'
 });
 
 export default createdAccountDTOStub;
