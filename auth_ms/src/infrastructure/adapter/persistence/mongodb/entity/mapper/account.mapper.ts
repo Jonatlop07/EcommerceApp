@@ -1,4 +1,4 @@
-import { AccountDTO } from '@core/domain/auth/dto/account.dto';
+import { AccountDTO } from '@core/domain/auth/use-case/dto/account.dto';
 import { toMomentString } from '@core/common/util/time/date_utils';
 import AccountDocument from '@infrastructure/adapter/persistence/mongodb/entity/account.document';
 

@@ -5,7 +5,7 @@ import { CreateAccountEntityPayload } from '@core/domain/auth/entity/type/create
 import { CoreAssert } from '@core/common/util/assert/core_assert'
 import { Code } from '@core/common/code/code'
 import { CoreException } from '@core/common/exception/core.exception'
-import { AccountDTO } from '@core/domain/auth/dto/account.dto'
+import { AccountDTO } from '@core/domain/auth/use-case/dto/account.dto'
 import { v4 } from 'uuid';
 import * as bcrypt from 'bcryptjs';
 

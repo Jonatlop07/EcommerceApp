@@ -7,7 +7,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { APIServerConfiguration } from '@infrastructure/config/api_server.config';
 import { RootModule } from '@application/module/.root.module';
 
-describe('SignUp', () => {
+describe('REST API Integration Test Suite', () => {
   let app: NestExpressApplication;
 
   const api_prefix: string = APIServerConfiguration.API_PREFIX;

@@ -8,7 +8,7 @@ import createdAccountDTOStub from '@test/unit/utils/stubs/created_account.dto.st
 import { FilterQuery } from 'mongoose';
 import Account from '@infrastructure/adapter/persistence/mongodb/entity/account.model';
 import MongoDBAuthRepositoryMock from '@test/unit/utils/mocks/mongodb_auth.repository.mock';
-import { AccountDTO } from '@core/domain/auth/dto/account.dto';
+import { AccountDTO } from '@core/domain/auth/use-case/dto/account.dto';
 import createdAccountModelStub from '@test/unit/utils/stubs/created_account.model.stub';
 
 describe('MongoDBAuthRepositoryAdapter', () => {

@@ -1,6 +1,6 @@
 import { Document, FilterQuery, Model } from 'mongoose';
 import { Nullable } from '@core/common/type/common_types';
-import { AccountDTO } from '@core/domain/auth/dto/account.dto';
+import { AccountDTO } from '@core/domain/auth/use-case/dto/account.dto';
 import CreateAccountDocumentDTO from '@infrastructure/adapter/persistence/mongodb/entity/dto/create_account_document.dto';
 
 export abstract class EntityRepository<T extends Document> {

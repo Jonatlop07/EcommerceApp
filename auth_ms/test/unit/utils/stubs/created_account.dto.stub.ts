@@ -1,4 +1,4 @@
-import { AccountDTO } from '@core/domain/auth/dto/account.dto';
+import { AccountDTO } from '@core/domain/auth/use-case/dto/account.dto';
 
 const createdAccountDTOStub = (): AccountDTO => ({
   account_id: undefined,

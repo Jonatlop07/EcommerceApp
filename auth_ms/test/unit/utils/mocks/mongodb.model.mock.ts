@@ -1,5 +1,5 @@
 import { FilterQuery, HydratedDocument } from 'mongoose';
-import { AccountDTO } from '@core/domain/auth/dto/account.dto';
+import { AccountDTO } from '@core/domain/auth/use-case/dto/account.dto';
 
 export default abstract class MongoDBModelMock<T> {
   protected abstract entity_stub: T;
