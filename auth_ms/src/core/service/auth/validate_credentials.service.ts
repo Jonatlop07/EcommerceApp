@@ -14,6 +14,12 @@ export default class ValidateCredentialsService implements ValidateCredentialsIn
   ) {}
 
   public async execute(input: ValidateCredentialsInputModel): Promise<ValidateCredentialsOutputModel> {
-    return Promise.resolve(undefined);
+    const { username } = input;
+    await this.gateway.findOne({
+      username
+    });
+    return {
+      are_valid_credentials: false
+    };
   }
 }
