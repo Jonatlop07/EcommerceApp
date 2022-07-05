@@ -75,4 +75,22 @@ describe('MongoDBAuthRepositoryAdapter', () => {
       });
     });
   });
+
+  describe('findOne', () => {
+    describe('when findOne is called', () => {
+      let account_dto: AccountDTO;
+
+      beforeEach(async () => {
+        account_dto = await auth_repository_adapter.findOne(account_query_model);
+      });
+
+      it('should call repository.findOne', () => {
+        expect(auth_repository.findOne).toHaveBeenCalledWith(account_filter_query);
+      });
+
+      it('should return account dto', () => {
+        expect(account_dto).toEqual(createdAccountDTOStub());
+      });
+    });
+  });
 });

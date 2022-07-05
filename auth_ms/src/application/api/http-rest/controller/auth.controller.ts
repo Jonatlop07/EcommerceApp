@@ -39,10 +39,11 @@ export default class AuthController {
     description: 'Credentials successfully validated'
   })
   async validateCredentials(@Body() credentials: HttpValidateCredentialsDTO): Promise<ValidateCredentialsResponse> {
-    const { are_credentials_valid } = await this.validate_credentials_interactor.execute(ValidateCredentialsInputMapper.toInputModel(credentials));
+    const { are_credentials_valid } = await this.validate_credentials_interactor.execute(
+      ValidateCredentialsInputMapper.toInputModel(credentials)
+    );
     return {
       are_credentials_valid
     };
-
   }
 }
