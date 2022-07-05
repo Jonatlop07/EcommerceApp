@@ -52,4 +52,20 @@ describe('Account entity', () => {
     });
     expect(account).toBeDefined();
   });
+
+  it('should return true when passwords match', async () => {
+    const account = await Account.new({
+      username: valid_username,
+      password: valid_password
+    });
+    expect(await account.passwordMatches(valid_password)).toEqual(true);
+  });
+
+  it('should return false when passwords do not match', async () => {
+    const account = await Account.new({
+      username: valid_username,
+      password: valid_password
+    });
+    expect(await account.passwordMatches(`${valid_password}_`)).toEqual(false);
+  });
 });

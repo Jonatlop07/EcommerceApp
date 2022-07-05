@@ -65,6 +65,10 @@ export default class Account extends Entity<Id> {
     return account;
   }
 
+  public async passwordMatches(password: string): Promise<boolean> {
+    return await bcrypt.compare(password, this.password);
+  }
+
   public toDTO(): AccountDTO {
     return {
       account_id: this.id,
