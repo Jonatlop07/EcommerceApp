@@ -9,6 +9,7 @@ import CreateAccountDataMapper
   from '@infrastructure/adapter/persistence/mongodb/entity/mapper/create_account_data.mapper';
 import AccountMapper from '@infrastructure/adapter/persistence/mongodb/entity/mapper/account.mapper';
 import AccountDocument from '@infrastructure/adapter/persistence/mongodb/entity/account.document';
+import { Optional } from '@core/common/type/common_types';
 
 export default class MongoDBAuthRepositoryAdapter implements AuthRepository {
   private readonly logger: Logger = new Logger(MongoDBAuthRepositoryAdapter.name);
@@ -19,7 +20,7 @@ export default class MongoDBAuthRepositoryAdapter implements AuthRepository {
   ) {}
 
   public async exists(params: AccountQueryModel): Promise<boolean> {
-    const account: Account = await this.repository.findOne({
+    const account: AccountDocument = await this.repository.findOne({
       acc_username: params.username
     });
     return account !== undefined && account !== null;
@@ -30,5 +31,12 @@ export default class MongoDBAuthRepositoryAdapter implements AuthRepository {
       CreateAccountDataMapper.toDocumentDTO(create_account_dto)
     );
     return AccountMapper.toDTO(account);
+  }
+
+  public async findOne(params: AccountQueryModel): Promise<Optional<AccountDTO>> {
+    const account: AccountDocument = await this.repository.findOne({
+      acc_username: params.username
+    });
+    return !!account ? AccountMapper.toDTO(account) : undefined;
   }
 }
