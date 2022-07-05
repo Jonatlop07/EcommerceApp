@@ -49,4 +49,22 @@ describe('REST API Integration Test Suite', () => {
       })
       .expect(HttpStatus.CREATED);
   });
+
+  it('validates credentials', async () => {
+    await api_client()
+      .post(`/${api_prefix}/auth/account`)
+      .send({
+        username: valid_username,
+        password: valid_password
+      });
+    await api_client()
+      .post(`/${api_prefix}/auth/validate`)
+      .send({
+        username: valid_username,
+        password: valid_password
+      })
+      .expect(HttpStatus.OK, {
+        are_credentials_valid: true
+      });
+  });
 });
