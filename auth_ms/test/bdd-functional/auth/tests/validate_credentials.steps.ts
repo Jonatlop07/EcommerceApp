@@ -76,18 +76,6 @@ defineFeature(feature, (test) => {
     }
   );
 
-  test('A user tries to login with credentials in an invalid format',
-    ({ given, and, when, then }) => {
-      givenUserProvidesCredentials(given);
-      andAccountExists(and);
-      whenUserTriesLogIn(when);
-      then('an error occurs: the format of the credentials is invalid', () => {
-        expect(exception).toBeDefined();
-        expect(exception.code).toBe(Code.ENTITY_VALIDATION_ERROR.code);
-      });
-    }
-  );
-
   test('A user tries to login with credentials that do not match an existing account',
     ({ given, when, then }) => {
       givenUserProvidesCredentials(given);

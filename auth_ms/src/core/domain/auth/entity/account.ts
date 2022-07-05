@@ -32,13 +32,15 @@ export default class Account extends Entity<Id> {
       })
     );
     this.password = payload.password;
-    CoreAssert.isTrue(
-      this.hasValidPasswordFormat(),
-      CoreException.new({
-        code: Code.ENTITY_VALIDATION_ERROR,
-        override_message: 'Account: Invalid password format'
-      })
-    );
+    if (payload.has_hashed_password) {
+      CoreAssert.isTrue(
+        this.hasValidPasswordFormat(),
+        CoreException.new({
+          code: Code.ENTITY_VALIDATION_ERROR,
+          override_message: 'Account: Invalid password format'
+        })
+      );
+    }
     this.created_at = payload.created_at || null;
   }
 
@@ -67,6 +69,15 @@ export default class Account extends Entity<Id> {
 
   public async passwordMatches(password: string): Promise<boolean> {
     return await bcrypt.compare(password, this.password);
+  }
+
+  public static async fromDTO(dto: AccountDTO): Promise<Account> {
+    const account: Account = new Account({
+      ...dto,
+      has_hashed_password: true
+    });
+    await account.validate();
+    return account;
   }
 
   public toDTO(): AccountDTO {

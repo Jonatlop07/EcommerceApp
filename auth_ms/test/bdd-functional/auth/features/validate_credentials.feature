@@ -10,19 +10,6 @@ Feature: Validate Credentials
       | Username | Password  |
       | new_user | Abc123_tr |
 
-  Scenario Outline: A user tries to login with credentials in an invalid format
-    Given the user provides the credentials: "<Username>" and "<Password>"
-    And an account exists with those credentials
-    When the user tries to login
-    Then an error occurs: the format of the credentials is invalid
-
-    Examples:
-      | Username | Password  |
-      | new user | Ab12_     |
-      | new      | Abc123_tr |
-      | new user | Abcdefghi |
-      |          | Abc123_tr |
-
   Scenario Outline: A user tries to login with credentials that do not match an existing account
     Given the user provides the credentials: "<Username>" and "<Password>"
     When the user tries to login
