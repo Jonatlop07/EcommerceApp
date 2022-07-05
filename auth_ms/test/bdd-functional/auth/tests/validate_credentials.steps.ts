@@ -6,6 +6,9 @@ import { Optional } from '@core/common/type/common_types';
 import { createTestModule } from '@test/bdd-functional/utils/create_test_module';
 import AuthDITokens from '@core/domain/auth/di/auth_di_tokens';
 import { Code } from '@core/common/code/code';
+import ValidateCredentialsInteractor from '@core/domain/auth/use-case/interactor/validate_credentials.interactor';
+import ValidateCredentialsInputModel from '@core/domain/auth/use-case/input-model/validate_credentials.input_model';
+import ValidateCredentialsOutputModel from '@core/domain/auth/use-case/output-model/validate_credentials.output_model';
 
 const feature = loadFeature('test/bdd-functional/auth/features/validate_credentials.feature');
 
@@ -14,7 +17,7 @@ defineFeature(feature, (test) => {
 
   let validate_credentials_interactor: ValidateCredentialsInteractor;
   let validate_credentials_input: ValidateCredentialsInputModel;
-  let validate_credentials_output: ValidateCredentialsOutput;
+  let validate_credentials_output: ValidateCredentialsOutputModel;
 
   let exception: CoreException<Optional<any>>;
 
@@ -50,11 +53,7 @@ defineFeature(feature, (test) => {
 
   function whenUserTriesLogIn(when: DefineStepFunction) {
     when('the user tries to login', async () => {
-      try {
-        validate_credentials_output = await validate_credentials_interactor.execute(validate_credentials_input);
-      } catch (e) {
-        exception = e;
-      }
+      await validateCredentials(validate_credentials_input);
     });
   }
 
