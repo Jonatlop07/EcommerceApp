@@ -6,6 +6,7 @@ import MongoDBDITokens from '@infrastructure/adapter/persistence/mongodb/di/mong
 import MongoDBAuthRepositoryAdapter
   from '@infrastructure/adapter/persistence/mongodb/repository/mongodb_auth.repository.adapter';
 import MongoDBAuthRepository from '@infrastructure/adapter/persistence/mongodb/repository/mongodb_auth.repository';
+import ValidateCredentialsService from '@core/service/auth/validate_credentials.service';
 
 const persistence_providers: Array<Provider> = [
   {
@@ -23,6 +24,11 @@ const use_case_providers: Array<Provider> = [
   {
     provide: AuthDITokens.SignUpInteractor,
     useFactory: (gateway) => new SignUpService(gateway),
+    inject: [AuthDITokens.AuthRepository]
+  },
+  {
+    provide: AuthDITokens.ValidateCredentialsInteractor,
+    useFactory: (gateway) => new ValidateCredentialsService(gateway),
     inject: [AuthDITokens.AuthRepository]
   }
 ];

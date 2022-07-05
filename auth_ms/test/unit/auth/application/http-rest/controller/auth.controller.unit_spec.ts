@@ -5,12 +5,13 @@ import SignUpInteractor from '@core/domain/auth/use-case/interactor/sign_up.inte
 import { sign_up_credentials_stub } from '@test/unit/utils/stubs/sign_up_credentials.stub';
 import AuthDITokens from '@core/domain/auth/di/auth_di_tokens';
 import ValidateCredentialsInteractor from '@core/domain/auth/use-case/interactor/validate_credentials.interactor';
+import ValidateCredentialsServiceMock from '@test/unit/utils/mocks/validate_credentials.service.mock';
 
 describe('AuthController', () => {
   let auth_controller: AuthController;
   let sign_up_interactor: SignUpInteractor;
   let validate_credentials_interactor: ValidateCredentialsInteractor;
-  let validate_credentials_output: unknown;
+  let validate_credentials_output: any;
 
   beforeEach(async () => {
     const module_ref = await Test.createTestingModule({
@@ -19,6 +20,10 @@ describe('AuthController', () => {
         {
           provide: AuthDITokens.SignUpInteractor,
           useClass: SignUpServiceMock
+        },
+        {
+          provide: AuthDITokens.ValidateCredentialsInteractor,
+          useClass: ValidateCredentialsServiceMock
         }
       ]
     }).compile();

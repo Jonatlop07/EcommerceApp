@@ -71,7 +71,7 @@ defineFeature(feature, (test) => {
       andAccountExists(and);
       whenUserTriesLogIn(when);
       then('the credentials are in a valid format and match an existing account', () => {
-        expect(validate_credentials_output.are_valid_credentials).toEqual(true);
+        expect(validate_credentials_output.are_credentials_valid).toEqual(true);
       });
     }
   );
@@ -81,7 +81,7 @@ defineFeature(feature, (test) => {
       givenUserProvidesCredentials(given);
       whenUserTriesLogIn(when);
       then('the credentials are not valid: an account with the credentials provided does not exist', () => {
-        expect(validate_credentials_output.are_valid_credentials).toEqual(false);
+        expect(validate_credentials_output.are_credentials_valid).toEqual(false);
       });
     }
   );
