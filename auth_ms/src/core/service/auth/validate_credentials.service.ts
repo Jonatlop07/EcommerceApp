@@ -21,7 +21,7 @@ export default class ValidateCredentialsService implements ValidateCredentialsIn
   public async execute(input: ValidateCredentialsInputModel): Promise<ValidateCredentialsOutputModel> {
     const { username, password } = input;
     const invalid_credentials_output: ValidateCredentialsOutputModel = {
-      are_valid_credentials: false
+      are_credentials_valid: false
     };
     const account_dto: AccountDTO = await this.gateway.findOne({
       username
@@ -34,7 +34,7 @@ export default class ValidateCredentialsService implements ValidateCredentialsIn
       return invalid_credentials_output;
     }
     return {
-      are_valid_credentials: true
+      are_credentials_valid: true
     };
   }
 }

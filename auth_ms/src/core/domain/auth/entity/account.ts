@@ -32,7 +32,7 @@ export default class Account extends Entity<Id> {
       })
     );
     this.password = payload.password;
-    if (payload.has_hashed_password) {
+    if (payload.has_hashed_password !== true) {
       CoreAssert.isTrue(
         this.hasValidPasswordFormat(),
         CoreException.new({

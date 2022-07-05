@@ -45,7 +45,7 @@ describe('ValidateCredentialsService', () => {
 
       it('should return that credentials are not valid', () => {
         expect(output).toBeDefined();
-        expect(output.are_valid_credentials).toEqual(false);
+        expect(output.are_credentials_valid).toEqual(false);
       });
     });
   });
