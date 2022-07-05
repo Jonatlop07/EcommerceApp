@@ -89,7 +89,8 @@
     },
     "testMatch": [
       "<rootDir>/test/bdd-functional/**/*.steps.ts",
-      "<rootDir>/test/unit/**/*.unit_spec.ts"
+      "<rootDir>/test/unit/**/*.unit_spec.ts",
+      "<rootDir>/test/integration/**/*.integration_spec.ts"
     ],
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"

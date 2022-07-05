@@ -8,6 +8,7 @@ import { DocumentBuilder, OpenAPIObject, SwaggerModule } from '@nestjs/swagger';
 import { RootModule } from '@application/module/.root.module';
 import { APIServerConfiguration } from '@infrastructure/config/api_server.config';
 import * as chalk from 'chalk';
+import { ValidationPipe } from '@application/api/http-rest/common/pipes/validation.pipe';
 
 function buildAPIDocumentation(app: INestApplication): void {
   const title = 'Mini Ecommerce Auth Microservice';
@@ -43,6 +44,7 @@ export class ServerApplication {
       app.enableCors({
         origin: '*'
       });
+      app.useGlobalPipes(new ValidationPipe());
       buildAPIDocumentation(app);
       await app.listen(
         process.env.PORT || this.port,
