@@ -1,9 +1,13 @@
-import { defineFeature, DefineStepFunction, loadFeature } from 'jest-cucumber'
-import { CoreException } from '@core/common/exception/core.exception'
-import { Optional } from '@core/common/type/common_types'
-import { createTestModule } from '@test/bdd-functional/utils/create_test_module'
+import { defineFeature, DefineStepFunction, loadFeature } from 'jest-cucumber';
+import { CoreException } from '@core/common/exception/core.exception';
+import { Optional } from '@core/common/type/common_types';
+import { createTestModule } from '@test/bdd-functional/utils/create_test_module';
+import AddItemInputModel from '@core/domain/catalog/use-case/input-model/add_item.input_model';
+import AddItemOutputModel from '@core/domain/catalog/use-case/output-model/add_item.output_model';
+import AddItemInteractor from '@core/domain/catalog/use-case/interactor/add_item.interactor';
+import CatalogDITokens from '@core/domain/catalog/use-case/dto/catalog_di_tokens'
 
-const feature = loadFeature('test/bdd-functional/auth/features/add_item.feature');
+const feature = loadFeature('test/bdd-functional/catalog/features/add_item.feature');
 
 defineFeature(feature, (test) => {
   let add_item_interactor: AddItemInteractor;
