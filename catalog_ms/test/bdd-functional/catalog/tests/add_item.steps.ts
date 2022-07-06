@@ -23,6 +23,7 @@ defineFeature(feature, (test) => {
       output = await add_item_interactor.execute(input);
     } catch (e) {
       exception = e;
+      console.log(e);
     }
   }
 
@@ -33,13 +34,14 @@ defineFeature(feature, (test) => {
   function andDetailsProvidedAre(and: DefineStepFunction) {
     and(
       /^the details are: "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)"$/,
-      ({ vendor_id, name, description, price, units_available }) => {
+      (vendor_id: string, name: string, description: string, price: string, units_available: string) => {
+        console.log(typeof parseFloat(price));
         input = {
           vendor_id,
           name,
           description,
-          price,
-          units_available
+          price: parseFloat(price),
+          units_available: parseInt(units_available)
         };
       }
     );
@@ -80,12 +82,12 @@ defineFeature(feature, (test) => {
             created_at: null,
             updated_at: null
           };
-          expect(output).toBeDefined();
-          expect(output).toHaveProperty('vendor_id', expected_catalog_item.vendor_id);
-          expect(output).toHaveProperty('name', expected_catalog_item.name);
-          expect(output).toHaveProperty('description', expected_catalog_item.description);
-          expect(output).toHaveProperty('price', expected_catalog_item.price);
-          expect(output).toHaveProperty('units_available', expected_catalog_item.units_available);
+          expect(output.created_item).toBeDefined();
+          expect(output.created_item).toHaveProperty('vendor_id', expected_catalog_item.vendor_id);
+          expect(output.created_item).toHaveProperty('name', expected_catalog_item.name);
+          expect(output.created_item).toHaveProperty('description', expected_catalog_item.description);
+          expect(output.created_item).toHaveProperty('price', expected_catalog_item.price);
+          expect(output.created_item).toHaveProperty('units_available', expected_catalog_item.units_available);
         }
       );
     }

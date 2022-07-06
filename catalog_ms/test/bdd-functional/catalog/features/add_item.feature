@@ -20,4 +20,4 @@ Feature: Add Item
     Examples:
       | VendorId | Name  | Description  | Price | UnitsAvailable |
       | 1        | item1 | generic item | -1.0  | 2              |
-      | 1        |       |              | 1.0   | -1              |
+      | 1        |       |              | 1.0   | -1             |
