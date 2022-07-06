@@ -5,6 +5,7 @@ import CreateCatalogItemDocumentDTO
 export default class CreateCatalogItemDataMapper {
   public static toDocumentDTO(dto: CatalogItemDTO): CreateCatalogItemDocumentDTO {
     return {
+      cat_item_id: dto.item_id,
       cat_vendor_id: dto.vendor_id,
       cat_name: dto.name,
       cat_description: dto.description,

@@ -1,6 +1,7 @@
 import CatalogItem from '@infrastructure/adapter/persistence/mongodb/entity/catalog_item.model'
 
 const createdCatalogItemModelStub = (): CatalogItem => ({
+  cat_item_id: '1',
   cat_vendor_id: '1',
   cat_name: 'item1',
   cat_description: '',

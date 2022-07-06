@@ -3,6 +3,9 @@ import { Prop, Schema } from '@nestjs/mongoose'
 @Schema()
 export default class CatalogItem {
   @Prop()
+  cat_item_id: string;
+
+  @Prop()
   cat_vendor_id: string;
 
   @Prop()

@@ -1,12 +1,12 @@
 import MongoDBCatalogRepositoryAdapter
-  from '@infrastructure/adapter/persistence/mongodb/repository/mongodb_catalog.repository.adapter'
-import MongoDBCatalogRepository from '@infrastructure/adapter/persistence/mongodb/repository/mongodb_catalog.repository'
-import { Test } from '@nestjs/testing'
-import MongoDBDITokens from '@infrastructure/adapter/persistence/mongodb/di/mongodb_di_tokens'
-import CatalogItemDTO from '@core/domain/catalog/use-case/dto/catalog_item.dto'
-import createdItemStub from '@test/unit/utils/stubs/created_item.stub'
-import createdCatalogItemModelStub from '@test/unit/utils/stubs/created_catalog_item.model.stub'
-import MongoDBCatalogRepositoryMock from '@test/unit/utils/mocks/mongodb_catalog.repository.mock'
+  from '@infrastructure/adapter/persistence/mongodb/repository/mongodb_catalog.repository.adapter';
+import MongoDBCatalogRepository from '@infrastructure/adapter/persistence/mongodb/repository/mongodb_catalog.repository';
+import { Test } from '@nestjs/testing';
+import MongoDBDITokens from '@infrastructure/adapter/persistence/mongodb/di/mongodb_di_tokens';
+import CatalogItemDTO from '@core/domain/catalog/use-case/dto/catalog_item.dto';
+import createdItemStub from '@test/unit/utils/stubs/created_item.stub';
+import MongoDBCatalogRepositoryMock from '@test/unit/utils/mocks/mongodb_catalog.repository.mock';
+import createCatalogItemDocumentDTOStub from '@test/unit/utils/stubs/create_catalog_item.document_dto.stub';
 
 describe('MongoDBCatalogRepositoryAdapter', () => {
   let auth_repository_adapter: MongoDBCatalogRepositoryAdapter;
@@ -38,7 +38,7 @@ describe('MongoDBCatalogRepositoryAdapter', () => {
       });
 
       it('should call repository.create', () => {
-        expect(auth_repository.create).toHaveBeenCalledWith(createdCatalogItemModelStub());
+        expect(auth_repository.create).toHaveBeenCalledWith(createCatalogItemDocumentDTOStub());
       });
 
       it('should return account_dto', () => {
