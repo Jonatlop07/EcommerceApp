@@ -1,5 +1,5 @@
 import { Test } from '@nestjs/testing';
-import CatalogDITokens from '@core/domain/catalog/use-case/dto/catalog_di_tokens'
+import CatalogDITokens from '@core/domain/catalog/di/catalog_di_tokens'
 import AddItemService from '@core/service/add_item.service'
 
 export function createTestModule() {

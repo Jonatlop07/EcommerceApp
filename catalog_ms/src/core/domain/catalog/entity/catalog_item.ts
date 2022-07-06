@@ -6,6 +6,7 @@ import CreateCatalogItemEntityPayload from '@core/domain/catalog/entity/type/cre
 import { CoreAssert } from '@core/common/util/assert/core_assert'
 import { CoreException } from '@core/common/exception/core.exception'
 import { Code } from '@core/common/code/code'
+import CatalogItemDTO from '@core/domain/catalog/use-case/dto/catalog_item.dto'
 
 export default class CatalogItem extends Entity<Id> {
   @IsString()
@@ -76,5 +77,18 @@ export default class CatalogItem extends Entity<Id> {
     const catalog_item: CatalogItem = new CatalogItem(payload);
     await catalog_item.validate();
     return catalog_item;
+  }
+
+  public toDTO(): CatalogItemDTO {
+    return {
+      item_id: this._id,
+      vendor_id: this.vendor_id,
+      name: this.name,
+      description: this.description,
+      price: this.price,
+      units_available: this.units_available,
+      created_at: this.created_at,
+      updated_at: this.updated_at
+    }
   }
 }

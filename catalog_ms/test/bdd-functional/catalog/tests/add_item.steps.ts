@@ -5,8 +5,9 @@ import { createTestModule } from '@test/bdd-functional/utils/create_test_module'
 import AddItemInputModel from '@core/domain/catalog/use-case/input-model/add_item.input_model';
 import AddItemOutputModel from '@core/domain/catalog/use-case/output-model/add_item.output_model';
 import AddItemInteractor from '@core/domain/catalog/use-case/interactor/add_item.interactor';
-import CatalogDITokens from '@core/domain/catalog/use-case/dto/catalog_di_tokens'
+import CatalogDITokens from '@core/domain/catalog/di/catalog_di_tokens'
 import { Code } from '@core/common/code/code'
+import CatalogItemDTO from '@core/domain/catalog/use-case/dto/catalog_item.dto'
 
 const feature = loadFeature('test/bdd-functional/catalog/features/add_item.feature');
 
@@ -69,7 +70,22 @@ defineFeature(feature, (test) => {
       then(
         'the item is successfully added to the catalog',
         () => {
+          const expected_catalog_item: CatalogItemDTO = {
+            item_id: '',
+            vendor_id: input.vendor_id,
+            name:input.name,
+            description: input.description,
+            price: input.price,
+            units_available: input.units_available,
+            created_at: null,
+            updated_at: null
+          };
           expect(output).toBeDefined();
+          expect(output).toHaveProperty('vendor_id', expected_catalog_item.vendor_id);
+          expect(output).toHaveProperty('name', expected_catalog_item.name);
+          expect(output).toHaveProperty('description', expected_catalog_item.description);
+          expect(output).toHaveProperty('price', expected_catalog_item.price);
+          expect(output).toHaveProperty('units_available', expected_catalog_item.units_available);
         }
       );
     }
