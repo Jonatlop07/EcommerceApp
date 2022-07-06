@@ -1,5 +1,5 @@
 import SignUpInteractor from '@core/domain/auth/use-case/interactor/sign_up.interactor'
-import SignUpOutputModel from '@core/domain/auth/use-case/input-model/sign_up.output_model'
+import SignUpOutputModel from '@core/domain/auth/use-case/output-model/sign_up.output_model'
 import SignUpInputModel from '@core/domain/auth/use-case/input-model/sign_up.input_model'
 import { Inject, Logger } from '@nestjs/common'
 import Account from '@core/domain/auth/entity/account'

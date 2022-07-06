@@ -5,7 +5,7 @@ import { CreateAccountEntityPayload } from '@core/domain/auth/entity/type/create
 import { CoreAssert } from '@core/common/util/assert/core_assert'
 import { Code } from '@core/common/code/code'
 import { CoreException } from '@core/common/exception/core.exception'
-import { AccountDTO } from '@core/domain/auth/dto/account.dto'
+import { AccountDTO } from '@core/domain/auth/use-case/dto/account.dto'
 import { v4 } from 'uuid';
 import * as bcrypt from 'bcryptjs';
 
@@ -32,13 +32,15 @@ export default class Account extends Entity<Id> {
       })
     );
     this.password = payload.password;
-    CoreAssert.isTrue(
-      this.hasValidPasswordFormat(),
-      CoreException.new({
-        code: Code.ENTITY_VALIDATION_ERROR,
-        override_message: 'Account: Invalid password format'
-      })
-    );
+    if (payload.has_hashed_password !== true) {
+      CoreAssert.isTrue(
+        this.hasValidPasswordFormat(),
+        CoreException.new({
+          code: Code.ENTITY_VALIDATION_ERROR,
+          override_message: 'Account: Invalid password format'
+        })
+      );
+    }
     this.created_at = payload.created_at || null;
   }
 
@@ -61,6 +63,19 @@ export default class Account extends Entity<Id> {
   public static async new(payload: CreateAccountEntityPayload): Promise<Account> {
     const account: Account = new Account(payload);
     await account.hashPassword();
+    await account.validate();
+    return account;
+  }
+
+  public async passwordMatches(password: string): Promise<boolean> {
+    return await bcrypt.compare(password, this.password);
+  }
+
+  public static async fromDTO(dto: AccountDTO): Promise<Account> {
+    const account: Account = new Account({
+      ...dto,
+      has_hashed_password: true
+    });
     await account.validate();
     return account;
   }

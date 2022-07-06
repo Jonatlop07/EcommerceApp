@@ -5,4 +5,5 @@ export type CreateAccountEntityPayload = {
   username: string,
   password: string,
   created_at?: string,
+  has_hashed_password?: boolean
 }

@@ -2,7 +2,7 @@ import { loadFeature, defineFeature, DefineStepFunction } from 'jest-cucumber';
 import { createTestModule } from '@test/bdd-functional/utils/create_test_module';
 import SignUpInteractor from '@core/domain/auth/use-case/interactor/sign_up.interactor';
 import SignUpInputModel from '@core/domain/auth/use-case/input-model/sign_up.input_model';
-import SignUpOutputModel from '@core/domain/auth/use-case/input-model/sign_up.output_model';
+import SignUpOutputModel from '@core/domain/auth/use-case/output-model/sign_up.output_model';
 import AuthDITokens from '@core/domain/auth/di/auth_di_tokens';
 import { CoreException } from '@core/common/exception/core.exception';
 import { Code } from '@core/common/code/code';

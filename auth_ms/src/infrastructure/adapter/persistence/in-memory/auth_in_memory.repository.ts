@@ -1,7 +1,8 @@
 import AuthRepository from '@core/domain/auth/use-case/repository/auth.repository';
-import { AccountDTO } from '@core/domain/auth/dto/account.dto';
+import { AccountDTO } from '@core/domain/auth/use-case/dto/account.dto';
 import AccountQueryModel from '@core/domain/auth/use-case/query-model/account.query_model';
-import { getCurrentDateString } from '@core/common/util/time/moment_utils'
+import { getCurrentDateString } from '@core/common/util/time/date_utils'
+import { Optional } from '@core/common/type/common_types';
 
 export class AuthInMemoryRepository implements AuthRepository {
   private currently_available_account_id: string;
@@ -28,5 +29,15 @@ export class AuthInMemoryRepository implements AuthRepository {
       if (_account.username === params.username)
         return Promise.resolve(true);
     return Promise.resolve(false);
+  }
+
+  public findOne(params: AccountQueryModel): Promise<Optional<AccountDTO>> {
+    for (const account of this.accounts.values()) {
+      // @ts-ignore
+      if (Object.keys(params).every((key: string) => params[key] === account[key])) {
+        return Promise.resolve(account);
+      }
+    }
+    return Promise.resolve(undefined);
   }
 }

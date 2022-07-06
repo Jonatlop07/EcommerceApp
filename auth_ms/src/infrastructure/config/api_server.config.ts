@@ -10,4 +10,6 @@ export class APIServerConfiguration {
   public static readonly ENABLE_LOG: boolean = get('API_ENABLE_LOG')
     .required()
     .asBool();
+
+  public static readonly API_PREFIX: string = 'api/v1';
 }
