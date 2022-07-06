@@ -23,7 +23,6 @@ defineFeature(feature, (test) => {
       output = await add_item_interactor.execute(input);
     } catch (e) {
       exception = e;
-      console.log(e);
     }
   }
 
@@ -35,7 +34,6 @@ defineFeature(feature, (test) => {
     and(
       /^the details are: "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)"$/,
       (vendor_id: string, name: string, description: string, price: string, units_available: string) => {
-        console.log(typeof parseFloat(price));
         input = {
           vendor_id,
           name,

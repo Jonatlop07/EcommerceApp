@@ -3,10 +3,9 @@ import CatalogController from '@application/api/http-rest/controller/catalog.con
 import CatalogDITokens from '@core/domain/catalog/di/catalog_di_tokens'
 import AddItemService from '@core/service/add_item.service'
 import MongoDBDITokens from '@infrastructure/adapter/persistence/mongodb/di/mongodb_di_tokens'
-import MongoDBCatalogRepository
-  from '@test/../../infrastructure/adapter/persistence/mongodb/repository/mongodb_catalog.repository'
+import MongoDBCatalogRepository from '@infrastructure/adapter/persistence/mongodb/repository/mongodb_catalog.repository'
 import MongoDBCatalogRepositoryAdapter
-  from '@test/../../infrastructure/adapter/persistence/mongodb/repository/mongodb_catalog.repository.adapter'
+  from '@infrastructure/adapter/persistence/mongodb/repository/mongodb_catalog.repository.adapter'
 
 const persistence_providers: Array<Provider> = [
   {
