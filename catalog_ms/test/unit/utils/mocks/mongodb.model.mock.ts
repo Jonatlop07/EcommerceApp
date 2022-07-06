@@ -8,13 +8,4 @@ export default abstract class MongoDBModelMock<T> {
       save: (): Promise<T> => Promise.resolve(this.entity_stub)
     }
   }
-
-  public findOne(
-    entity_filter_query: FilterQuery<T>,
-    projection?: Record<string, unknown>
-  ): { exec: () => Promise<T> } {
-    return {
-      exec: (): Promise<T> => Promise.resolve(this.entity_stub)
-    };
-  }
 }

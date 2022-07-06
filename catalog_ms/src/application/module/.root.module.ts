@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { setEnvironment } from '@application/environments';
 import InfrastructureModule from '@application/module/infrastructure.module';
+import CatalogModule from '@application/module/catalog.module'
 
 @Module({
   imports: [
@@ -10,6 +11,7 @@ import InfrastructureModule from '@application/module/infrastructure.module';
       envFilePath: `env/${setEnvironment()}`,
     }),
     InfrastructureModule,
+    CatalogModule
   ],
   providers: []
 })

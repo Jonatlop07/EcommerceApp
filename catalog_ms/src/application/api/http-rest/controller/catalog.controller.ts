@@ -4,6 +4,7 @@ import AddItemInteractor from '@core/domain/catalog/use-case/interactor/add_item
 import { ApiCreatedResponse, ApiInternalServerErrorResponse, ApiTags } from '@nestjs/swagger'
 import HttpItemDetailsDTO from '@application/api/http-rest/dto/http_item_details.dto'
 import AddItemResponse from '@application/api/http-rest/response/add_item.response'
+import AddItemMapper from '@application/api/http-rest/mapper/add_item.mapper'
 
 @Controller('catalog')
 @ApiTags('catalog')
@@ -24,8 +25,9 @@ export default class CatalogController {
     description: 'Item successfully added to the catalog'
   })
   async addItem(@Body() item_details: HttpItemDetailsDTO): Promise<AddItemResponse> {
-    return {
-      created_item: null
-    }
+    const { created_item } = await this.add_item_interactor.execute(
+      AddItemMapper.toInputModel(item_details)
+    );
+    return { created_item };
   }
 }
