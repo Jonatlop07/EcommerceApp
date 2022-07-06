@@ -36,4 +36,17 @@ describe('REST API Integration Test Suite', () => {
     await connection.db.dropDatabase();
     await app.close();
   });
+
+  it('adds an item to the catalog', async () => {
+    await api_client()
+      .post(`/${api_prefix}/catalog`)
+      .send({
+        vendor_id: '1',
+        name: 'item1',
+        description: '',
+        price: 1.0,
+        units_available: 1
+      })
+      .expect(HttpStatus.CREATED);
+  });
 });
