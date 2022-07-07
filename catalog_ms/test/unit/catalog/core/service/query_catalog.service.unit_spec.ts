@@ -35,7 +35,7 @@ describe('QueryCatalog Service', () => {
       });
 
       it('should call gateway.findAll', () => {
-        expect(catalog_repository.findAll).toBeCalledWith(queryCatalogByItemNameStub());
+        expect(catalog_repository.findAll).toBeCalledWith(queryCatalogByItemNameStub(), undefined);
       });
 
       it('should return a collection of items', () => {

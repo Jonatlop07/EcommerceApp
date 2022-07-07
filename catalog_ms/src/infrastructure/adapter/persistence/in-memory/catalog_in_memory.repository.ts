@@ -1,6 +1,8 @@
 import CatalogRepository from '@core/domain/catalog/use-case/repository/catalog.repository'
 import CatalogItemDTO from '@core/domain/catalog/use-case/dto/catalog_item.dto'
 import { getCurrentDateString } from '@core/common/util/time/date_utils'
+import QueryCatalogQueryModel from '@core/domain/catalog/use-case/query-model/query_catalog.query_model'
+import { PaginationDTO } from '@core/common/persistence/pagination.dto'
 
 export default class CatalogInMemoryRepository implements CatalogRepository {
   private currently_available_catalog_item_id: string;
@@ -23,5 +25,9 @@ export default class CatalogInMemoryRepository implements CatalogRepository {
     this.catalog_items.set(this.currently_available_catalog_item_id, new_catalog_item);
     this.currently_available_catalog_item_id = `${Number(this.currently_available_catalog_item_id) + 1}`;
     return Promise.resolve(new_catalog_item);
+  }
+
+  public async findAll(params: QueryCatalogQueryModel, pagination?: PaginationDTO): Promise<CatalogItemDTO[]> {
+    return Promise.resolve([]);
   }
 }
