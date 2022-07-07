@@ -14,10 +14,10 @@ const feature = loadFeature('test/bdd-functional/catalog/features/query_catalog.
 
 defineFeature(feature, (test) => {
   let add_item_interactor: AddItemInteractor;
-  const catalog_items: Array<CatalogItemDTO> = [];
+  let catalog_items: Array<CatalogItemDTO> = [];
 
   let query_catalog_interactor: QueryCatalogInteractor;
-  let query_catalog_input: QueryCatalogInputModel;
+  let query_catalog_input: QueryCatalogInputModel = {};
   let query_catalog_output: QueryCatalogOutputModel;
 
   let exception: CoreException<Optional<any>>;
@@ -74,6 +74,7 @@ defineFeature(feature, (test) => {
     const module = await createTestModule();
     add_item_interactor = module.get<AddItemInteractor>(CatalogDITokens.AddItemInteractor);
     query_catalog_interactor = module.get<QueryCatalogInteractor>(CatalogDITokens.QueryCatalogInteractor);
+    catalog_items = [];
     query_catalog_output = undefined;
     exception = undefined;
   });
@@ -85,12 +86,15 @@ defineFeature(feature, (test) => {
       whenUserQueriesItemCatalog(when);
       then(/^the following items are retrieved:$/, (created_items: Array<CatalogItemDTO>) => {
         expect(query_catalog_output.items.length).toEqual(created_items.length);
-        for (let i = 0; i < length; ++i) {
-          expect(query_catalog_output.items[i]).toHaveProperty('vendor_id', created_items[i].vendor_id);
-          expect(query_catalog_output.items[i]).toHaveProperty('name', created_items[i].name);
-          expect(query_catalog_output.items[i]).toHaveProperty('description', created_items[i].description);
-          expect(query_catalog_output.items[i]).toHaveProperty('price', created_items[i].price);
-          expect(query_catalog_output.items[i]).toHaveProperty('units_available', created_items[i].units_available);
+
+        for (let i = 0; i < query_catalog_output.items.length; ++i) {
+          const actual_item = query_catalog_output.items[i];
+          const expected_item = created_items[i];
+          expect(actual_item).toHaveProperty('vendor_id', expected_item.vendor_id);
+          expect(actual_item).toHaveProperty('name', expected_item.name);
+          expect(actual_item).toHaveProperty('description', expected_item.description);
+          expect(actual_item).toHaveProperty('price', parseFloat(expected_item.price.toString()));
+          expect(actual_item).toHaveProperty('units_available', parseInt(expected_item.units_available.toString()));
         }
       });
     }
@@ -105,11 +109,12 @@ defineFeature(feature, (test) => {
       then(
         'the items with a name that match that provided by the user are retrieved',
         () => {
+          console.log(catalog_items.length);
           const expected_items: Array<CatalogItemDTO> = catalog_items.filter(
             (item: CatalogItemDTO) =>
               item.name.includes(query_catalog_input.item_name)
           );
-          expect(expected_items).toHaveProperty('length', query_catalog_output.items.length);
+          expect(expected_items.length).toEqual(query_catalog_output.items.length);
           expected_items.forEach((expected_item: CatalogItemDTO) => {
             expect(
               query_catalog_output

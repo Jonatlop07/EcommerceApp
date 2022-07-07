@@ -18,7 +18,8 @@ export function createTestModule() {
       },
       {
         provide: CatalogDITokens.QueryCatalogInteractor,
-        useFactory: () => new QueryCatalogService()
+        useFactory: (gateway) => new QueryCatalogService(gateway),
+        inject: [CatalogDITokens.CatalogRepository]
       }
     ]
   }).compile();

@@ -28,6 +28,16 @@ export default class CatalogInMemoryRepository implements CatalogRepository {
   }
 
   public async findAll(params: QueryCatalogQueryModel, pagination?: PaginationDTO): Promise<CatalogItemDTO[]> {
-    return Promise.resolve([]);
+    const items: Array<CatalogItemDTO> = [];
+    for (const item of this.catalog_items.values()) {
+      if (params.item_name !== undefined) {
+        if (item.name.includes(params.item_name)) {
+          items.push(item);
+        }
+      } else {
+        items.push(item)
+      }
+    }
+    return Promise.resolve(items);
   }
 }
