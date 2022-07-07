@@ -49,4 +49,11 @@ describe('REST API Integration Test Suite', () => {
       })
       .expect(HttpStatus.CREATED);
   });
+
+  it('queries catalog by name', async () => {
+    await api_client()
+      .get(`/${api_prefix}/catalog?item_name=item`)
+      .send()
+      .expect(HttpStatus.OK);
+  });
 });
