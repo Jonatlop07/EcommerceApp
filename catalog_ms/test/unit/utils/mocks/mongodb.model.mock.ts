@@ -1,5 +1,4 @@
 import { FilterQuery } from 'mongoose';
-import itemCollectionStub from '@test/unit/utils/stubs/item_collection.stub'
 
 export default abstract class MongoDBModelMock<T> {
   protected abstract entity_stub: T;
