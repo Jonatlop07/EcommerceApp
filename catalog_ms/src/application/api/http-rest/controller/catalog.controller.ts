@@ -8,6 +8,7 @@ import AddItemResponse from '@application/api/http-rest/response/add_item.respon
 import AddItemMapper from '@application/api/http-rest/mapper/add_item.mapper';
 import HttpQueryCatalogDTO from '@application/api/http-rest/dto/http_query_catalog.dto'
 import QueryCatalogResponse from '@application/api/http-rest/response/query_catalog.response'
+import QueryCatalogMapper from '@application/api/http-rest/mapper/query_catalog.mapper'
 
 @Controller('catalog')
 @ApiTags('catalog')
@@ -42,8 +43,11 @@ export default class CatalogController {
     description: 'Catalog items successfully queried'
   })
   async queryCatalog(@Query() query_params: HttpQueryCatalogDTO): Promise<QueryCatalogResponse> {
+    const { items } = await this.query_catalog_interactor.execute(
+      QueryCatalogMapper.toInputModel(query_params)
+    );
     return Promise.resolve({
-      queried_items: []
+      queried_items: items
     });
   }
 }

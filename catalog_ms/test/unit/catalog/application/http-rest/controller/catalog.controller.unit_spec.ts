@@ -73,7 +73,7 @@ describe('CatalogController', () => {
 
       it('should return a response with a collection of items', () => {
         expect(query_catalog_response).toBeDefined();
-        expect(query_catalog_response).toHaveProperty('items', itemCollectionStub());
+        expect(query_catalog_response).toHaveProperty('queried_items', itemCollectionStub());
       });
     });
   });
