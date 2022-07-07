@@ -6,6 +6,7 @@ import MongoDBDITokens from '@infrastructure/adapter/persistence/mongodb/di/mong
 import MongoDBCatalogRepository from '@infrastructure/adapter/persistence/mongodb/repository/mongodb_catalog.repository'
 import MongoDBCatalogRepositoryAdapter
   from '@infrastructure/adapter/persistence/mongodb/repository/mongodb_catalog.repository.adapter'
+import QueryCatalogService from '@core/service/query_catalog.service'
 
 const persistence_providers: Array<Provider> = [
   {
@@ -23,6 +24,11 @@ const use_case_providers: Array<Provider> = [
   {
     provide: CatalogDITokens.AddItemInteractor,
     useFactory: (gateway) => new AddItemService(gateway),
+    inject: [CatalogDITokens.CatalogRepository]
+  },
+  {
+    provide: CatalogDITokens.QueryCatalogInteractor,
+    useFactory: (gateway) => new QueryCatalogService(gateway),
     inject: [CatalogDITokens.CatalogRepository]
   }
 ];

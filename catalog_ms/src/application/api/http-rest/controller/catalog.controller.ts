@@ -1,10 +1,13 @@
-import { Body, Controller, HttpCode, HttpStatus, Inject, Logger, Post } from '@nestjs/common'
-import CatalogDITokens from '@core/domain/catalog/di/catalog_di_tokens'
-import AddItemInteractor from '@core/domain/catalog/use-case/interactor/add_item.interactor'
-import { ApiCreatedResponse, ApiInternalServerErrorResponse, ApiTags } from '@nestjs/swagger'
-import HttpItemDetailsDTO from '@application/api/http-rest/dto/http_item_details.dto'
-import AddItemResponse from '@application/api/http-rest/response/add_item.response'
-import AddItemMapper from '@application/api/http-rest/mapper/add_item.mapper'
+import { Body, Controller, Get, HttpCode, HttpStatus, Inject, Logger, Post, Query } from '@nestjs/common';
+import CatalogDITokens from '@core/domain/catalog/di/catalog_di_tokens';
+import AddItemInteractor from '@core/domain/catalog/use-case/interactor/add_item.interactor';
+import QueryCatalogInteractor from '@core/domain/catalog/use-case/interactor/query_catalog.interactor';
+import { ApiCreatedResponse, ApiInternalServerErrorResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import HttpItemDetailsDTO from '@application/api/http-rest/dto/http_item_details.dto';
+import AddItemResponse from '@application/api/http-rest/response/add_item.response';
+import AddItemMapper from '@application/api/http-rest/mapper/add_item.mapper';
+import HttpQueryCatalogDTO from '@application/api/http-rest/dto/http_query_catalog.dto'
+import QueryCatalogResponse from '@application/api/http-rest/response/query_catalog.response'
 
 @Controller('catalog')
 @ApiTags('catalog')
@@ -16,7 +19,9 @@ export default class CatalogController {
 
   constructor(
     @Inject(CatalogDITokens.AddItemInteractor)
-    private readonly add_item_interactor: AddItemInteractor
+    private readonly add_item_interactor: AddItemInteractor,
+    @Inject(CatalogDITokens.QueryCatalogInteractor)
+    private readonly query_catalog_interactor: QueryCatalogInteractor
   ) {}
 
   @Post()
@@ -29,5 +34,16 @@ export default class CatalogController {
       AddItemMapper.toInputModel(item_details)
     );
     return { created_item };
+  }
+
+  @Get()
+  @HttpCode(HttpStatus.OK)
+  @ApiOkResponse({
+    description: 'Catalog items successfully queried'
+  })
+  async queryCatalog(@Query() query_params: HttpQueryCatalogDTO): Promise<QueryCatalogResponse> {
+    return Promise.resolve({
+      queried_items: []
+    });
   }
 }
