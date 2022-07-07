@@ -109,7 +109,6 @@ defineFeature(feature, (test) => {
       then(
         'the items with a name that match that provided by the user are retrieved',
         () => {
-          console.log(catalog_items.length);
           const expected_items: Array<CatalogItemDTO> = catalog_items.filter(
             (item: CatalogItemDTO) =>
               item.name.includes(query_catalog_input.item_name)

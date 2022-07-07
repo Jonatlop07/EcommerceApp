@@ -27,6 +27,9 @@ export default class MongoDBCatalogRepositoryAdapter implements CatalogRepositor
   }
 
   public async findAll(params: QueryCatalogQueryModel, pagination?: PaginationDTO): Promise<CatalogItemDTO[]> {
-    return Promise.resolve([]);
+    const items: Array<CatalogItemDocument> = await this.repository.findAll({
+      cat_name: params.item_name
+    });
+    return items.map((item) => CatalogItemMapper.toDTO(item));
   }
 }

@@ -8,13 +8,16 @@ import createdItemStub from '@test/unit/utils/stubs/created_item.stub';
 import MongoDBCatalogRepositoryMock from '@test/unit/utils/mocks/mongodb_catalog.repository.mock';
 import createCatalogItemDocumentDTOStub from '@test/unit/utils/stubs/create_catalog_item.document_dto.stub';
 import itemCollectionStub from '@test/unit/utils/stubs/item_collection.stub';
-import queryCatalogByItemNameStub from '@test/unit/utils/stubs/query_catalog_by_item_name.stub'
-import QueryCatalogQueryModel from '@core/domain/catalog/use-case/query-model/query_catalog.query_model'
+import queryCatalogByItemNameStub from '@test/unit/utils/stubs/query_catalog_by_item_name.stub';
+import QueryCatalogQueryModel from '@core/domain/catalog/use-case/query-model/query_catalog.query_model';
+import { FilterQuery } from 'mongoose';
+import CatalogItem from '@infrastructure/adapter/persistence/mongodb/entity/catalog_item.model';
 
 describe('MongoDBCatalogRepositoryAdapter', () => {
   let catalog_repository_adapter: MongoDBCatalogRepositoryAdapter;
   let catalog_repository: MongoDBCatalogRepository;
   let catalog_query_model: QueryCatalogQueryModel;
+  let catalog_filter_query: FilterQuery<CatalogItem>;
 
   beforeEach(async () => {
     const module_ref = await Test.createTestingModule({
@@ -31,6 +34,9 @@ describe('MongoDBCatalogRepositoryAdapter', () => {
     catalog_repository = module_ref.get<MongoDBCatalogRepository>(MongoDBDITokens.CatalogRepository);
     catalog_query_model = {
       item_name: queryCatalogByItemNameStub().item_name
+    };
+    catalog_filter_query = {
+      cat_name: catalog_query_model.item_name
     };
 
     jest.clearAllMocks();
@@ -63,7 +69,7 @@ describe('MongoDBCatalogRepositoryAdapter', () => {
       });
 
       it('should call repository.findOne', () => {
-        expect(catalog_repository.findAll).toHaveBeenCalledWith(catalog_query_model);
+        expect(catalog_repository.findAll).toHaveBeenCalledWith(catalog_filter_query);
       });
 
       it('should return account dto', () => {

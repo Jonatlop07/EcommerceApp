@@ -3,6 +3,7 @@ import createdCatalogItemModelStub from '@test/unit/utils/stubs/created_catalog_
 
 const itemModelCollectionStub = (): Array<CatalogItem> => ([
   createdCatalogItemModelStub(),
+  createdCatalogItemModelStub(),
   createdCatalogItemModelStub()
 ]);
 
