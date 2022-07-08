@@ -1,6 +1,5 @@
 # EcommerceApp ADD
 
-
 ## Decomposition View:
 
 ![Auth Components](./documentation/images/decomposition_view.png)  
