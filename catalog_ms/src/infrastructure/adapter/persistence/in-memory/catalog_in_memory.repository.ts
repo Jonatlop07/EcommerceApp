@@ -17,8 +17,7 @@ export default class CatalogInMemoryRepository implements CatalogRepository {
       vendor_id: catalog_item.vendor_id,
       name: catalog_item.name,
       description: catalog_item.description,
-      price: catalog_item.price,
-      units_available: catalog_item.units_available,
+      media_uris: catalog_item.media_uris,
       created_at: getCurrentDateString(),
       updated_at: null
     };

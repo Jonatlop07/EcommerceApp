@@ -4,8 +4,7 @@ const addItemStub = (): AddItemInputModel => ({
   vendor_id: '1',
   name: 'item1',
   description: '',
-  price: 1.0,
-  units_available: 1
+  media_uris: ['a', 'b']
 });
 
 export default addItemStub;

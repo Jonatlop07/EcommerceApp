@@ -1,7 +1,7 @@
 import { defineFeature, DefineStepFunction, loadFeature } from 'jest-cucumber';
 import AddItemInteractor from '@core/domain/catalog/use-case/interactor/add_item.interactor';
 import { CoreException } from '@core/common/exception/core.exception'
-import { Optional } from '@core/common/type/common_types'
+import { Id, Optional } from '@core/common/type/common_types'
 import AddItemInputModel from '@core/domain/catalog/use-case/input-model/add_item.input_model'
 import CatalogItemDTO from '@core/domain/catalog/use-case/dto/catalog_item.dto'
 import { createTestModule } from '@test/bdd-functional/utils/create_test_module'
@@ -11,6 +11,13 @@ import QueryCatalogInputModel from '@core/domain/catalog/use-case/input-model/qu
 import QueryCatalogOutputModel from '@core/domain/catalog/use-case/output-model/query_catalog.output_model'
 
 const feature = loadFeature('test/bdd-functional/catalog/features/query_catalog.feature');
+
+interface AddItemFeatureInput {
+  vendor_id: Id;
+  name: string;
+  description: string;
+  media_uris: string;
+}
 
 defineFeature(feature, (test) => {
   let add_item_interactor: AddItemInteractor;
@@ -38,12 +45,11 @@ defineFeature(feature, (test) => {
   function givenItemsExist(given: DefineStepFunction) {
     given(
       /^these items exists in the catalog:$/,
-      async (items_to_create: Array<AddItemInputModel>) => {
+      async (items_to_create: Array<AddItemFeatureInput>) => {
         for (const item of items_to_create) {
           catalog_items.push(await addItem({
             ...item,
-            price: parseFloat(item.price.toString()),
-            units_available: parseInt(item.units_available.toString())
+            media_uris: item.media_uris.split(';')
           }));
         }
       }
@@ -84,7 +90,7 @@ defineFeature(feature, (test) => {
     ({ given, when, then }) => {
       givenItemsExist(given);
       whenUserQueriesItemCatalog(when);
-      then(/^the following items are retrieved:$/, (created_items: Array<CatalogItemDTO>) => {
+      then(/^the following items are retrieved:$/, (created_items: Array<AddItemFeatureInput>) => {
         expect(query_catalog_output.items.length).toEqual(created_items.length);
 
         for (let i = 0; i < query_catalog_output.items.length; ++i) {
@@ -93,8 +99,7 @@ defineFeature(feature, (test) => {
           expect(actual_item).toHaveProperty('vendor_id', expected_item.vendor_id);
           expect(actual_item).toHaveProperty('name', expected_item.name);
           expect(actual_item).toHaveProperty('description', expected_item.description);
-          expect(actual_item).toHaveProperty('price', parseFloat(expected_item.price.toString()));
-          expect(actual_item).toHaveProperty('units_available', parseInt(expected_item.units_available.toString()));
+          expect(actual_item).toHaveProperty('media_uris', expected_item.media_uris.split(';'));
         }
       });
     }

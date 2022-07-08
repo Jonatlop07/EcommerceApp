@@ -5,9 +5,8 @@ import { createTestModule } from '@test/bdd-functional/utils/create_test_module'
 import AddItemInputModel from '@core/domain/catalog/use-case/input-model/add_item.input_model';
 import AddItemOutputModel from '@core/domain/catalog/use-case/output-model/add_item.output_model';
 import AddItemInteractor from '@core/domain/catalog/use-case/interactor/add_item.interactor';
-import CatalogDITokens from '@core/domain/catalog/di/catalog_di_tokens'
-import { Code } from '@core/common/code/code'
-import CatalogItemDTO from '@core/domain/catalog/use-case/dto/catalog_item.dto'
+import CatalogDITokens from '@core/domain/catalog/di/catalog_di_tokens';
+import CatalogItemDTO from '@core/domain/catalog/use-case/dto/catalog_item.dto';
 
 const feature = loadFeature('test/bdd-functional/catalog/features/add_item.feature');
 
@@ -32,14 +31,13 @@ defineFeature(feature, (test) => {
 
   function andDetailsProvidedAre(and: DefineStepFunction) {
     and(
-      /^the details are: "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)"$/,
-      (vendor_id: string, name: string, description: string, price: string, units_available: string) => {
+      /^the details are: "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)"$/,
+      (vendor_id: string, name: string, description: string, media_uris_string: string) => {
         input = {
           vendor_id,
           name,
           description,
-          price: parseFloat(price),
-          units_available: parseInt(units_available)
+          media_uris: media_uris_string.split(';')
         };
       }
     );
@@ -75,8 +73,7 @@ defineFeature(feature, (test) => {
             vendor_id: input.vendor_id,
             name:input.name,
             description: input.description,
-            price: input.price,
-            units_available: input.units_available,
+            media_uris: ['a', 'b'],
             created_at: null,
             updated_at: null
           };
@@ -84,24 +81,7 @@ defineFeature(feature, (test) => {
           expect(output.created_item).toHaveProperty('vendor_id', expected_catalog_item.vendor_id);
           expect(output.created_item).toHaveProperty('name', expected_catalog_item.name);
           expect(output.created_item).toHaveProperty('description', expected_catalog_item.description);
-          expect(output.created_item).toHaveProperty('price', expected_catalog_item.price);
-          expect(output.created_item).toHaveProperty('units_available', expected_catalog_item.units_available);
-        }
-      );
-    }
-  );
-
-  test(
-    'A user tries to add an item with invalid details to the catalog',
-    ({ given, and, when, then }) => {
-      givenUserProvidesItemDetails(given);
-      andDetailsProvidedAre(and);
-      whenUserTriesToAddItem(when);
-      then(
-        'an error occurs: the item\'s details are invalid',
-        () => {
-          expect(exception).toBeDefined();
-          expect(exception.code).toBe(Code.ENTITY_VALIDATION_ERROR.code);
+          expect(output.created_item).toHaveProperty('media_uris', expected_catalog_item.media_uris);
         }
       );
     }

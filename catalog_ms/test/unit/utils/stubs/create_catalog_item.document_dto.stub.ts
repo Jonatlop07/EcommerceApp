@@ -6,8 +6,7 @@ const createCatalogItemDocumentDTOStub = (): CreateCatalogItemDocumentDTO => ({
   cat_vendor_id: '1',
   cat_name: 'item1',
   cat_description: '',
-  cat_price: 1.0,
-  cat_units_available: 1
+  cat_media_uris: ['a', 'b']
 });
 
 export default createCatalogItemDocumentDTOStub;

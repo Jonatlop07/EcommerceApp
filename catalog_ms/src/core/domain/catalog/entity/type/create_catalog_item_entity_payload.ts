@@ -5,8 +5,7 @@ export default interface CreateCatalogItemEntityPayload {
   vendor_id: Id;
   name: string;
   description: string;
-  price: number;
-  units_available: number;
+  media_uris: Array<string>;
   created_at?: Optional<string>;
   updated_at?: Optional<string>;
 }
