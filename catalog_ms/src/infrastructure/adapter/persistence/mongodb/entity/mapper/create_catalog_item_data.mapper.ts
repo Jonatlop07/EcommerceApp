@@ -9,8 +9,7 @@ export default class CreateCatalogItemDataMapper {
       cat_vendor_id: dto.vendor_id,
       cat_name: dto.name,
       cat_description: dto.description,
-      cat_price: dto.price,
-      cat_units_available: dto.units_available
+      cat_media_uris: dto.media_uris
     };
   }
 }

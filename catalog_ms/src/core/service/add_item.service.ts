@@ -21,8 +21,7 @@ export default class AddItemService implements AddItemInteractor {
       vendor_id: input.vendor_id,
       name: input.name,
       description: input.description,
-      price: input.price,
-      units_available: input.units_available
+      media_uris: input.media_uris
     });
     const created_item: CatalogItemDTO = await this.gateway.create(catalog_item.toDTO());
     return {

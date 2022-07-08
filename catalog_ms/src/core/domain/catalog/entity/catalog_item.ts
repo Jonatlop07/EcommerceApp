@@ -1,6 +1,6 @@
 import { Entity } from '@core/common/entity/entity';
 import { Id, Nullable, Optional } from '@core/common/type/common_types';
-import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsArray, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 import { v4 } from 'uuid';
 import CreateCatalogItemEntityPayload from '@core/domain/catalog/entity/type/create_catalog_item_entity_payload'
 import { CoreAssert } from '@core/common/util/assert/core_assert'
@@ -19,17 +19,8 @@ export default class CatalogItem extends Entity<Id> {
   @IsString()
   private readonly description: Optional<string>;
 
-  @IsNumber({
-    allowNaN: false,
-    allowInfinity: false
-  })
-  private readonly price: number;
-
-  @IsNumber({
-    allowNaN: false,
-    allowInfinity: false
-  })
-  private readonly units_available: number;
+  @IsArray()
+  private readonly media_uris: Array<string>;
 
   @IsOptional()
   @IsString()
@@ -45,32 +36,9 @@ export default class CatalogItem extends Entity<Id> {
     this.vendor_id = payload.vendor_id;
     this.name = payload.name;
     this.description = payload.description || '';
-    this.price = payload.price;
-    CoreAssert.isTrue(
-      this.hasValidPrice(),
-      CoreException.new({
-        code: Code.ENTITY_VALIDATION_ERROR,
-        override_message: 'CatalogItem: Invalid price -> Should be a real number greater or equal to 0.0'
-      })
-    );
-    this.units_available = payload.units_available;
-    CoreAssert.isTrue(
-      this.hasValidUnitsAvailable(),
-      CoreException.new({
-        code: Code.ENTITY_VALIDATION_ERROR,
-        override_message: 'CatalogItem: Invalid units available -> Should be an integer greater or equal to 0'
-      })
-    );
+    this.media_uris = payload.media_uris;
     this.created_at = payload.created_at || null;
     this.updated_at = payload.updated_at || null;
-  }
-
-  private hasValidPrice(): boolean {
-    return this.price >= 0.0;
-  }
-
-  private hasValidUnitsAvailable() {
-    return this.units_available >= 0;
   }
 
   public static async new(payload: CreateCatalogItemEntityPayload): Promise<CatalogItem> {
@@ -85,8 +53,7 @@ export default class CatalogItem extends Entity<Id> {
       vendor_id: this.vendor_id,
       name: this.name,
       description: this.description,
-      price: this.price,
-      units_available: this.units_available,
+      media_uris: this.media_uris,
       created_at: this.created_at,
       updated_at: this.updated_at
     }

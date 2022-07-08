@@ -6,6 +6,7 @@ import { Connection } from 'mongoose';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { APIServerConfiguration } from '@infrastructure/config/api_server.config';
 import { RootModule } from '@application/module/.root.module';
+import HttpItemDetailsDTO from '@application/api/http-rest/dto/http_item_details.dto'
 
 describe('REST API Integration Test Suite', () => {
   let app: NestExpressApplication;
@@ -44,9 +45,8 @@ describe('REST API Integration Test Suite', () => {
         vendor_id: '1',
         name: 'item1',
         description: '',
-        price: 1.0,
-        units_available: 1
-      })
+        media_uris: ['a', 'b']
+      } as HttpItemDetailsDTO)
       .expect(HttpStatus.CREATED);
   });
 

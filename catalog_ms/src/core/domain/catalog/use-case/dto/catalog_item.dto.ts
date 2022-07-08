@@ -1,12 +1,11 @@
-import { Id, Nullable, Optional } from '@core/common/type/common_types'
+import { Id, Nullable } from '@core/common/type/common_types'
 
 export default interface CatalogItemDTO {
   item_id: Id;
   vendor_id: Id;
   name: string;
   description: string;
-  price: number;
-  units_available: number;
+  media_uris: Array<string>;
   created_at: Nullable<string>;
   updated_at: Nullable<string>;
 }
