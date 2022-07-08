@@ -5,8 +5,7 @@ const createdItemStub = (): CatalogItemDTO => ({
   vendor_id: '1',
   name: 'item1',
   description: '',
-  price: 1.0,
-  units_available: 1,
+  media_uris: ['a', 'b'],
   created_at: '2022/03/22 11:54:02',
   updated_at: null
 });

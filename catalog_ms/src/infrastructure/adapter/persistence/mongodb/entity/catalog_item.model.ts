@@ -15,10 +15,7 @@ export default class CatalogItem {
   cat_description: string;
 
   @Prop()
-  cat_price: number;
-
-  @Prop()
-  cat_units_available: number;
+  cat_media_uris: Array<string>;
 
   @Prop()
   cat_created_at: Date;

@@ -4,6 +4,5 @@ export default interface AddItemInputModel {
   vendor_id: Id;
   name: string;
   description: string;
-  price: number;
-  units_available: number;
+  media_uris: Array<string>;
 }

@@ -9,8 +9,7 @@ export default class CatalogItemMapper {
       vendor_id: catalog_item.cat_vendor_id,
       name: catalog_item.cat_name,
       description: catalog_item.cat_description,
-      price: catalog_item.cat_price,
-      units_available: catalog_item.cat_units_available,
+      media_uris: catalog_item.cat_media_uris,
       created_at: toMomentString(catalog_item.cat_created_at),
       updated_at: catalog_item.cat_updated_at ? toMomentString(catalog_item.cat_updated_at) : null
     };

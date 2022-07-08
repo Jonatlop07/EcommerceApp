@@ -1,5 +1,5 @@
 import { Id } from '@core/common/type/common_types'
-import { IsNotEmpty, IsNumber, IsOptional, IsString, IsUUID } from 'class-validator'
+import { IsArray, IsNotEmpty, IsOptional, IsString, IsUUID } from 'class-validator'
 
 export default class HttpItemDetailsDTO {
   @IsUUID()
@@ -13,9 +13,6 @@ export default class HttpItemDetailsDTO {
   @IsString()
   description: string;
 
-  @IsNumber()
-  price: number;
-
-  @IsNumber()
-  units_available: number;
+  @IsArray()
+  media_uris: Array<string>;
 }

@@ -7,8 +7,7 @@ export default class AddItemMapper {
       vendor_id: dto.vendor_id,
       name: dto.name,
       description: dto.description,
-      price: dto.price,
-      units_available: dto.units_available
+      media_uris: dto.media_uris
     };
   }
 }
