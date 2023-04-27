@@ -1,5 +1,5 @@
 import { Body, Controller, HttpCode, HttpStatus, Inject, Logger, Post } from '@nestjs/common';
-import { ApiCreatedResponse, ApiInternalServerErrorResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { ApiInternalServerErrorResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import AuthDITokens from '@core/domain/auth/di/auth_di_tokens';
 import SignUpInteractor from '@core/domain/auth/use-case/interactor/sign_up.interactor';
 import HttpSignUpDTO from '@application/api/http-rest/dto/http_sign_up.dto';
@@ -8,6 +8,7 @@ import ValidateCredentialsInputMapper from '@application/api/http-rest/mapper/va
 import HttpValidateCredentialsDTO from '@application/api/http-rest/dto/http_validate_credentials.dto';
 import ValidateCredentialsInteractor from '@core/domain/auth/use-case/interactor/validate_credentials.interactor';
 import ValidateCredentialsResponse from '@application/api/http-rest/response/validate_credentials.response';
+import { CoreApiResponse } from '@core/common/api/core_api_response';
 
 @Controller('auth')
 @ApiTags('authentication')
@@ -25,12 +26,13 @@ export default class AuthController {
   ) {}
 
   @Post('account')
-  @HttpCode(HttpStatus.CREATED)
-  @ApiCreatedResponse({
+  @HttpCode(HttpStatus.OK)
+  @ApiOkResponse({
     description: 'Account successfully created'
   })
-  async signUp(@Body() credentials: HttpSignUpDTO): Promise<void> {
+  async signUp(@Body() credentials: HttpSignUpDTO): Promise<CoreApiResponse<void>> {
     await this.sign_up_interactor.execute(SignUpInputMapper.toInputModel(credentials));
+    return CoreApiResponse.success();
   }
 
   @Post('validate')
@@ -38,12 +40,12 @@ export default class AuthController {
   @ApiOkResponse({
     description: 'Credentials successfully validated'
   })
-  async validateCredentials(@Body() credentials: HttpValidateCredentialsDTO): Promise<ValidateCredentialsResponse> {
+  async validateCredentials(
+    @Body() credentials: HttpValidateCredentialsDTO
+  ): Promise<CoreApiResponse<ValidateCredentialsResponse>> {
     const { are_credentials_valid } = await this.validate_credentials_interactor.execute(
       ValidateCredentialsInputMapper.toInputModel(credentials)
     );
-    return {
-      are_credentials_valid
-    };
+    return CoreApiResponse.success({ are_credentials_valid });
   }
 }

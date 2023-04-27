@@ -6,15 +6,13 @@ export abstract class EntityRepository<T extends Document> {
 
   public async findOne(
     entity_filter_query: FilterQuery<T>,
-    projection?: Record<string, unknown>
+    projection?: Record<string, unknown>,
   ): Promise<Nullable<T>> {
     return await this.entity_model
-      .findOne(
-        entity_filter_query,
-        {
-          _id: 0,
-          __v: 0,
-          ...projection
+      .findOne(entity_filter_query, {
+        _id: 0,
+        __v: 0,
+        ...projection,
       })
       .exec();
   }

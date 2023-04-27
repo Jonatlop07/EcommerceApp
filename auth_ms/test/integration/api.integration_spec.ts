@@ -6,6 +6,8 @@ import { Connection } from 'mongoose';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { APIServerConfiguration } from '@infrastructure/config/api_server.config';
 import { RootModule } from '@application/module/.root.module';
+import { Code } from '@core/common/code/code';
+import { ResponseExpect } from '@test/integration/util/response_expect';
 
 describe('REST API Integration Test Suite', () => {
   let app: NestExpressApplication;
@@ -20,7 +22,7 @@ describe('REST API Integration Test Suite', () => {
 
   beforeEach(async () => {
     const module_ref = await Test.createTestingModule({
-      imports: [RootModule]
+      imports: [RootModule],
     }).compile();
 
     app = module_ref.createNestApplication<NestExpressApplication>();
@@ -41,13 +43,21 @@ describe('REST API Integration Test Suite', () => {
   const valid_password = 'Abc123_tr';
 
   it('signs up', async () => {
-    await api_client()
+    const response: request.Response = await api_client()
       .post(`/${api_prefix}/auth/account`)
       .send({
         username: valid_username,
-        password: valid_password
+        password: valid_password,
       })
-      .expect(HttpStatus.CREATED);
+      .expect(HttpStatus.OK);
+
+    ResponseExpect.codeAndMessage(
+      response.body,
+      {
+        code: Code.SUCCESS.code,
+        message: Code.SUCCESS.message
+      }
+    );
   });
 
   it('validates credentials', async () => {
@@ -55,16 +65,31 @@ describe('REST API Integration Test Suite', () => {
       .post(`/${api_prefix}/auth/account`)
       .send({
         username: valid_username,
-        password: valid_password
+        password: valid_password,
       });
-    await api_client()
+    const response: request.Response = await api_client()
       .post(`/${api_prefix}/auth/validate`)
       .send({
         username: valid_username,
-        password: valid_password
+        password: valid_password,
       })
-      .expect(HttpStatus.OK, {
+      .expect(HttpStatus.OK);
+
+    ResponseExpect.codeAndMessage(
+      response.body,
+      {
+        code: Code.SUCCESS.code,
+        message: Code.SUCCESS.message
+      }
+    );
+    ResponseExpect.data(
+      {
+        response: response.body,
+        pass_fields: ['are_credentials_valid']
+      },
+      {
         are_credentials_valid: true
-      });
+      }
+    );
   });
 });
