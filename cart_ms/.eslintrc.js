@@ -18,6 +18,7 @@ module.exports = {
   },
   ignorePatterns: ['.eslintrc.js'],
   rules: {
+    '@typescript-eslint/no-empty-interface': 'off',
     '@typescript-eslint/interface-name-prefix': 'off',
     '@typescript-eslint/explicit-function-return-type': 'error',
     '@typescript-eslint/explicit-module-boundary-types': 'error',
@@ -34,5 +35,6 @@ module.exports = {
     '@typescript-eslint/comma-spacing': 'error',
     '@typescript-eslint/keyword-spacing': 'error',
     '@typescript-eslint/brace-style': ['error', '1tbs'],
+    "prettier/prettier": ["error", { "endOfLine": "auto" } ]
   },
 };

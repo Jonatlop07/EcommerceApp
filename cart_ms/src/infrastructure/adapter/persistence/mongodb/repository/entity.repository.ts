@@ -1,5 +1,5 @@
 import { Document, FilterQuery, Model } from 'mongoose';
-import { Nullable } from '@core/common/type/common_types';
+import { Nullable } from '@core/abstraction/type/common_types';
 
 export abstract class EntityRepository<T extends Document> {
   protected constructor(protected readonly entity_model: Model<T>) {}

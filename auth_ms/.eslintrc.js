@@ -34,5 +34,6 @@ module.exports = {
     '@typescript-eslint/comma-spacing': 'error',
     '@typescript-eslint/keyword-spacing': 'error',
     '@typescript-eslint/brace-style': ['error', '1tbs'],
+    "prettier/prettier": ["error", { "endOfLine": "auto" } ]
   },
 };

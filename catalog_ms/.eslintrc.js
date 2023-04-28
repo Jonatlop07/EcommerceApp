@@ -33,6 +33,6 @@ module.exports = {
     '@typescript-eslint/no-extra-semi': 'error',
     '@typescript-eslint/comma-spacing': 'error',
     '@typescript-eslint/keyword-spacing': 'error',
-    '@typescript-eslint/brace-style': ['error', '1tbs'],
+    '@typescript-eslint/brace-style': ['error', '1tbs']
   },
 };

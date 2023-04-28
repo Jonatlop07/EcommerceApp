@@ -1,2 +1,1 @@
-export default class MongoDBDITokens {
-}
+export default class MongoDBDITokens {}
